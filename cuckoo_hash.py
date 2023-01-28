@@ -34,12 +34,12 @@ class CuckooHash:
 			self.tables[tableId][val] = key
 			if keyToEvict is None:
 				return True
-			else:
-				if cnt == self.CYCLE_THRESHOLD:
-					return False
+			else:				
 				tableId = 1 - tableId
 				key = keyToEvict
 				cnt += 1
+				if cnt > self.CYCLE_THRESHOLD:
+					return False
 		
 		
 	def lookup(self, key: int) -> bool:
@@ -70,7 +70,7 @@ class CuckooHash:
 				#if not :
 				self.insert(oldTable[0][i])
 					#return
-		for i in range(len(oldTable[0])):
+		for i in range(len(oldTable[1])):
 			if oldTable[1][i] is not None:				
 				#if not :
 				self.insert(oldTable[1][i])
