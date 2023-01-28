@@ -60,18 +60,19 @@ class CuckooHash:
 		elif self.tables[1][h1] == key:
 			self.tables[1][h1] = None
 
-	def rehash(self, new_table_size: int) -> None:
-		
-		old_size = self.table_size
+	def rehash(self, new_table_size: int) -> None:		
+		#old_size = self.table_size
 		self.__num_rehashes += 1; self.table_size = new_table_size # do not modify this line	
 		oldTable = self.tables	 
 		self.tables = [[None]*new_table_size for _ in range(2)]
-		for i in range(old_size):									
+		for i in range(len(oldTable[0])):									
 			if oldTable[0][i] is not None:				
-				if not self.insert(oldTable[0][i]):
-					return
-		for i in range(old_size):
+				#if not :
+				self.insert(oldTable[0][i])
+					#return
+		for i in range(len(oldTable[0])):
 			if oldTable[1][i] is not None:				
-				if not self.insert(oldTable[1][i]):
-					return
+				#if not :
+				self.insert(oldTable[1][i])
+					#return
 		
