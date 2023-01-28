@@ -28,18 +28,17 @@ class CuckooHash:
 			return True
 		cnt = 0
 		tableId = 0		
-		while True:
+		while cnt <= self.CYCLE_THRESHOLD:
 			val = self.hash_func(key, tableId)
 			keyToEvict = self.tables[tableId][val]	
 			self.tables[tableId][val] = key
 			if keyToEvict is None:
 				return True
-			else:				
+			else:
 				tableId = 1 - tableId
 				key = keyToEvict
 				cnt += 1
-				if cnt > self.CYCLE_THRESHOLD:
-					return False
+		return False
 		
 		
 	def lookup(self, key: int) -> bool:
@@ -60,19 +59,15 @@ class CuckooHash:
 		elif self.tables[1][h1] == key:
 			self.tables[1][h1] = None
 
-	def rehash(self, new_table_size: int) -> None:		
-		#old_size = self.table_size
+	def rehash(self, new_table_size: int) -> None:				
 		self.__num_rehashes += 1; self.table_size = new_table_size # do not modify this line	
 		oldTable = self.tables	 
 		self.tables = [[None]*new_table_size for _ in range(2)]
 		for i in range(len(oldTable[0])):									
-			if oldTable[0][i] is not None:				
-				#if not :
+			if oldTable[0][i] is not None:
 				self.insert(oldTable[0][i])
-					#return
+
 		for i in range(len(oldTable[1])):
-			if oldTable[1][i] is not None:				
-				#if not :
+			if oldTable[1][i] is not None:
 				self.insert(oldTable[1][i])
-					#return
 		
