@@ -24,8 +24,8 @@ class CuckooHash:
 
 	def insert(self, key: int) -> bool:
 		# TODO
-		if self.lookup(key):
-			return True
+		# if self.lookup(key):
+		# 	return True
 		cnt = 0
 		tableId = 0		
 		while cnt <= self.CYCLE_THRESHOLD:
@@ -46,7 +46,6 @@ class CuckooHash:
 		val0 = self.tables[0][self.hash_func(key, 0)]
 		val1 = self.tables[1][self.hash_func(key, 1)]
 		return True if val0 == key or val1 == key else False
-		
 
 	def delete(self, key: int) -> None:
 		# TODO
@@ -66,8 +65,11 @@ class CuckooHash:
 		for i in range(len(oldTable[0])):									
 			if oldTable[0][i] is not None:
 				self.insert(oldTable[0][i])
+			# if oldTable[1][i] is not None:
+			# 	self.insert(oldTable[1][i])
 
 		for i in range(len(oldTable[1])):
 			if oldTable[1][i] is not None:
 				self.insert(oldTable[1][i])
+		
 		
